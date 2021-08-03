@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Glass login</title>
     <link rel="stylesheet" href="./styles/login.css">
+    
 </head>
 <body>
     <div>
@@ -25,6 +26,26 @@
             </div>
         </div>
     </div>
-</body>
+
+
+    
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+          apiKey: "AIzaSyDopn6x5RajyocJk5ZaBz0WvKunYjr54lo",
+          authDomain: "comiccollection-48b9f.firebaseapp.com",
+          databaseURL: "https://comiccollection-48b9f-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "comiccollection-48b9f",
+          storageBucket: "comiccollection-48b9f.appspot.com",
+          messagingSenderId: "336941908406",
+          appId: "1:336941908406:web:6c798d8f008b8a63d5c117"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
     <script src="./js/login.js"></script>
+</body> 
 </html>

@@ -8,10 +8,7 @@
 }
 
 body{
-    position: relative;
-    min-height: 100vh;
-    width: 100%;
-    overflow: hidden;
+    overflow: auto;
     background: #4e54c8;
 }
 
@@ -26,6 +23,7 @@ body{
     background: #11101d;
     padding: 6px 14px;
     transition: all 0.5s ease;
+    z-index: 2;
 }
 
 .sidebar.active{
@@ -56,6 +54,8 @@ body{
 .logo-content .logo .logo-name{
     font-size: 20px;
     font-weight: 400;
+    left: 23px;
+    position: relative;
 }
 
 .sidebar #btn{
@@ -235,8 +235,6 @@ body{
     width: calc(100% - 78px);
     left: 78px;
     transition: all 0.5s ease;
-    width: 100%;
-    height: 100vh;
 }
 
 .sidebar.active ~ .home-content{
@@ -245,7 +243,7 @@ body{
 }
 
 .circles{
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -353,19 +351,90 @@ body{
     }
 }
 
+
+header{
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    width: calc(100% - 78px);
+    transition: all 0.5s ease;
+    background: #4e54c8;
+    z-index: 2;
+}
+
+.sidebar.active ~ .home-content header{
+    width: calc(100% - 240px);
+}
+
+.search-wrapper{
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.search-wrapper i{
+    display: inline-block;
+    padding: 0rem 1rem;
+    font-size: 1.5rem;
+}
+
+.search-wrapper input{
+    width: 300px;
+    height: 100%;
+    padding: .5rem;
+    border: none;
+    outline: none;
+}
+
+.add-comic{
+    font-size: 1.5rem;
+    padding: 0rem 1rem;
+}
+
 .card-container{
     max-width: 60%;
     margin: auto;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    justify-content: center;
+    grid-template-columns: repeat(4, 250px);
+    position: relative;
+    top: 100px;
+}
+
+@media screen and (max-width: 1500px){
+    .card-container{
+        grid-template-columns: repeat(3, 250px);
+    }
+}
+
+@media screen and (max-width: 1200px){
+    .card-container{
+        grid-template-columns: repeat(2, 250px);
+    }
+}
+
+@media screen and (max-width: 900px){
+    .card-container{
+        grid-template-columns: 250px;
+    }
 }
 
 .card{
     background: rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(20px);
-    margin: 5px;
+    margin: 10px;
     border-radius: 8px;
-    box-shadow: 20px 20px 22px rgba(0, 0, 0, 0.2);
+}
+
+.card:hover{   
+    box-shadow: 0 14px 28px rgba(0 , 0, 0, 0.25), 
+                0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 .card-img{
@@ -379,6 +448,7 @@ body{
 }
 
 .card-img img{
+    border-radius: 8px 8px 0 0;
     width: 100%;
     height: 100%;
 }
