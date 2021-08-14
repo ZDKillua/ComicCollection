@@ -231,6 +231,30 @@
                 </div>
             </div>
         </div>
+        
+        <!-- Add Modal -->
+        <div class="add-modal modal-wrapper">
+            <div class="modal">
+                <div class="modal-header">Add Comic</div>
+                <div class="modal-body">
+                    <form action="" class="form" autocomplete="off">
+                        <img src="http://st.imageinstant.net/data/comics/133/ta-la-dai-than-tien.jpg" alt="">
+                        <input class="form-control" type="text" name="name" placeholder="Comic's name">
+                        <input class="form-control" type="number" name="chap" placeholder="Chap">
+                        <select class="form-control" name="type" id="type">
+                            <option value="Manhwa">Manhwa</option>
+                            <option value="Manhua">Manhua</option>
+                            <option value="Manga">Manga</option>
+                            <option value="Others">Others</option>
+                        </select>
+                        <input class="form-control" type="date" name="lastRead" disabled>
+                        <label class="form-control"><input type="checkbox" name="Hot">Hot</label>
+                        <label class="form-control"><input type="checkbox" name="BlackList">Black list</label>
+                        <button class="btn btn-modal">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
     <script src="./js/home.js"></script>

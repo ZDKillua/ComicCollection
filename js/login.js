@@ -1,4 +1,5 @@
-const db = firebase.database();
+//const db = firebase.database();
+const db = firebase.firestore();
 
 var inputPass = document.getElementById("password");
 inputPass.addEventListener("keyup", function(event) {
@@ -12,14 +13,16 @@ function Redirect() {
     let user = document.getElementById("user").value;
     let pass = document.getElementById("password").value;
 
-    db.ref("account/" + user).on("value", function(snapshot){
-        if (pass == snapshot.val().password){
-            localStorage.setItem("userName", snapshot.val().name);
-            localStorage.setItem("userJob", snapshot.val().job);
-            window.location = "home.html";
-        }
-        else {
-            alert("Password is invalid");
-        }
+    db.collection("account").where("username", "==", user).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+            if (doc.data().password == pass) {
+                localStorage.setItem("userName", doc.data().name);
+                localStorage.setItem("userJob", doc.data().job);
+                window.location = "home.html";
+            }
+            else {
+                alert("Password is invalid");
+            }
+        });
     });
 }

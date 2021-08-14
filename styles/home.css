@@ -365,6 +365,7 @@ header{
     z-index: 2;
 }
 
+/*------------------------ Header -------------------------*/
 .sidebar.active ~ .home-content header{
     width: calc(100% - 240px);
 }
@@ -394,9 +395,15 @@ header{
 
 .add-comic{
     font-size: 1.5rem;
-    padding: 0rem 1rem;
+    padding: .5rem;
+    border-radius: 50%;
 }
 
+.add-comic:hover{
+    background:rgba(0 , 0, 0, 0.15);
+}
+
+/*------------------------------- Content ------------------------------*/
 .card-container{
     max-width: 60%;
     margin: auto;
@@ -499,4 +506,84 @@ header{
 
 .details div:first-child{
     border-right: 2px solid rgba(255, 255, 255, 0.08);
+}
+
+/*---------------------------- Modal ----------------------------*/
+.modal-wrapper{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: #24232354;
+    display: none;
+}
+
+.modal{
+    position: relative;
+    background: #fff;
+    text-align: center;
+    width: 25rem;
+    margin: 5rem auto;
+    box-shadow: 0px 4px 22px -6px rgba(0, 0, 0, 0.75);
+    border-radius: 3px;
+    animation-name: animatetop;
+    animation-duration: .4s;
+}
+
+@keyframes animatetop{
+    from {
+        top: -300px;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+.modal-show{
+    display: block;
+}
+
+.modal-header{
+    margin-bottom: 1rem;
+    background: #f8fafb;
+    padding: 1rem;
+    border-radius: 3px;
+}
+
+.modal-body{
+    padding: 2rem;
+}
+
+.btn-modal{
+    background: #4e54c8;
+    border: none;
+    color: #fff;
+    width: 9rem;
+    padding: 5px;
+    border-radius: 20px;
+}
+
+.form-control{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 2.2rem;
+    margin-bottom: 1rem;
+    text-indent: .5rem;
+    outline: none;
+}
+
+.modal-body form input[type="checkbox"]{
+    width: 1rem;
+    height: 1rem;
+    margin-right: 10px;
+}
+
+.modal-body form img{
+    width: 60%;
+    margin-bottom: 20px;
+    background: yellow;
 }
