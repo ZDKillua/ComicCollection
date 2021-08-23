@@ -1,13 +1,30 @@
-let username = document.getElementById("userName");
-let job = document.getElementById("userJob");
+const db = firebase.firestore();
+
+// User
+const username = document.getElementById("userName");
+const job = document.getElementById("userJob");
 username.innerHTML = localStorage.getItem("userName");
 job.innerHTML = localStorage.getItem("userJob");
 
-let btnMenu = document.querySelector("#btn");
-let sidebar = document.querySelector(".sidebar");
-let btnLogout = document.getElementById("log-out");
-let btnAdd = document.getElementById("btnAdd");
-let addModal = document.querySelector(".add-modal");
+// Menu
+const btnMenu = document.querySelector("#btn");
+const sidebar = document.querySelector(".sidebar");
+const btnLogout = document.getElementById("log-out");
+
+// Modal add
+const btnAdd = document.getElementById("btnAdd");
+const addModal = document.querySelector(".add-modal");
+const addModalForm = document.querySelector('.add-modal .form');
+const txtImg = document.getElementById('linkImgAddModal');
+const img = document.getElementById('imgAddModal');
+
+// Modal edit
+const editModal = document.querySelector(".edit-modal");
+const editModalForm = document.querySelector('.edit-modal .form');
+let id;
+
+// Content
+const cardContainer = document.querySelector('.card-container');
 
 btnMenu.onclick = function() {
     sidebar.classList.toggle("active");
@@ -17,9 +34,32 @@ btnLogout.onclick = function() {
     window.location = "index.html";
 }
 
+function getDate() {
+    let now = new Date();
+    let mm = now.getMonth() + 1;
+    let dd = now.getDate();
+    if (mm < 10)
+        mm = '0' + mm;
+    if (dd < 10)
+        dd = '0' + dd;
+
+    let today = dd + '/' + mm + '/' + now.getFullYear();
+    return today;
+}
+
 // Click add comic button
 btnAdd.onclick = function() {
-    addModal.classList.add("modal-show");
+    document.getElementById('lastRead').value = getDate();
+    addModal.classList.toggle("modal-show");
+    
+    addModalForm.name.value = '';
+    addModalForm.chap.value = '';
+    addModalForm.image.value = '';
+    addModalForm.hot.checked = false;
+    addModalForm.blackList.checked = false;
+    addModalForm.imgAddModal.src = '';
+    if (img.getAttribute('src') == "")
+        img.style.visibility = 'hidden';
 }
 
 // User click anywhere outside the modal
@@ -27,7 +67,141 @@ window.addEventListener("click", e => {
     if (e.target === addModal) {
         addModal.classList.remove("modal-show");
     }
+    if (e.target == editModal) {
+        editModal.classList.remove("modal-show");
+    }
 })
 
+// Render a Comic
+const renderComic = doc => {
+    const card = `
+        <div class="card" data-id='${doc.id}' id='12'>
+            <i class='bx bxs-x-circle btn-delete' id="1"></i>
+            <div class="card-img">
+                <img class="btn-edit" src="${doc.data().image}" alt="">
+            </div>
+            <div class="desc">
+                <h6 class="card-title">${doc.data().name}</h6>
+            </div>
+            <div class="details">
+                <div class="chap">
+                    <h6 class="primary-text">${doc.data().chap}</h6>
+                    <h6 class="secondary-text">Chap</h6>
+                </div>
+                <div class="last-read">
+                    <h6 class="primary-text">${doc.data().lastRead}</h6>
+                    <h6 class="secondary-text">Last Read</h6>
+                </div>
+            </div>
+        </div>
+    `;
+    cardContainer.insertAdjacentHTML('beforeend', card);
 
+    // Click edit user
+    const btnEdit = document.querySelector(`[data-id='${doc.id}'] .btn-edit`);
+    btnEdit.addEventListener("dblclick", () => {
+        editModal.classList.add('modal-show');
 
+        id = doc.id;
+        editModalForm.name.value = doc.data().name;
+        editModalForm.chap.value = doc.data().chap;
+        editModalForm.image.value = doc.data().image;
+        editModalForm.type.value = doc.data().type;
+        editModalForm.lastRead.value = doc.data().lastRead;
+        editModalForm.hot.checked = doc.data().hot;
+        editModalForm.blackList.checked = doc.data().blackList;
+        editModalForm.imgEditModal.src = doc.data().image;
+    });
+    
+    // Click delete user
+    const btnDelete = document.querySelector(`[data-id='${doc.id}'] .btn-delete`);
+    btnDelete.addEventListener('click', () => {
+        if (confirm("Are you sure you want to delete this comic?") == true) {
+            db.collection('Comics/Admin/Comic').doc(`${doc.id}`).delete().then(() => {
+                console.log('Comic successfully deleted');
+            }).catch(err => {
+                console.log('Error removing comic', err);
+            });
+        }
+    });
+}
+
+// Get all comics
+// db.collection('Comics/Admin/Comic').get().then(querySnapshot => {
+//     querySnapshot.forEach(doc => {
+//         renderComic(doc);
+//     })
+// });
+
+// Real time listtener
+db.collection('Comics/Admin/Comic').onSnapshot(snapshot => {
+    snapshot.docChanges().forEach(change => {
+        if (change.type === 'added') {
+            renderComic(change.doc);
+        }
+        if (change.type === 'removed') {
+            let comic = document.querySelector(`[data-id='${change.doc.id}']`);
+            cardContainer.removeChild(comic);
+        }
+        if (change.type === 'modified') {
+            let comic = document.querySelector(`[data-id='${change.doc.id}']`);
+            cardContainer.removeChild(comic);
+            renderComic(change.doc);
+        }
+    })
+})
+
+// get validate in add comic form
+function validateAddForm(){
+    if (addModalForm.name.value == '' ||
+        addModalForm.chap.value == '' ||
+        addModalForm.image.value == '')
+        return false;
+    return true;
+}
+
+// Change text link img in add modal
+txtImg.addEventListener('change', () => {
+    if (txtImg.value != "") {
+        img.style.visibility = 'visible';
+        addModalForm.imgAddModal.src = txtImg.value;
+    }
+    else {
+        img.style.visibility = 'hidden';
+    }
+});
+
+// Click submit in add modal
+addModalForm.addEventListener('submit', e => {
+    e.preventDefault();
+    if (validateAddForm() == true) {
+        db.collection('Comics/Admin/Comic').add({
+            name: addModalForm.name.value,
+            chap: addModalForm.chap.value,
+            image: addModalForm.image.value,
+            type: addModalForm.type.value,
+            lastRead: addModalForm.lastRead.value,
+            hot: addModalForm.hot.checked,
+            blackList: addModalForm.blackList.checked
+        });
+        addModal.classList.remove('modal-show');
+    }
+    else {
+        alert('Please enter all information in the form');
+    }
+});
+
+// Click submit in edit modal
+editModalForm.addEventListener('submit', e => {
+    e.preventDefault();
+    db.collection('Comics/Admin/Comic').doc(id).update({
+        name: editModalForm.name.value,
+        chap: editModalForm.chap.value,
+        image: editModalForm.image.value,
+        type: editModalForm.type.value,
+        lastRead: editModalForm.lastRead.value,
+        hot: editModalForm.hot.checked,
+        blackList: editModalForm.blackList.checked
+    });
+    editModal.classList.remove('modal-show');
+});

@@ -98,138 +98,7 @@
             <i class='bx bxs-plus-circle add-comic' id="btnAdd"></i>
         </header>
         <div class="card-container">
-            <div class="card">
-                <div class="card-img">
-                    <img src="http://st.imageinstant.net/data/comics/133/ta-la-dai-than-tien.jpg" alt="">
-                </div>
-                <div class="desc">
-                    <h6 class="card-title">Ta là đại thần tiên</h6>
-                </div>
-                <div class="details">
-                    <div class="chap">
-                        <h6 class="primary-text">120</h6>
-                        <h6 class="secondary-text">Chap</h6>
-                    </div>
-                    <div class="last-read">
-                        <h6 class="primary-text">08/02/2021</h6>
-                        <h6 class="secondary-text">Last Read</h6>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-img">
-                    <img src="http://st.imageinstant.net/data/comics/133/ta-la-dai-than-tien.jpg" alt="">
-                </div>
-                <div class="desc">
-                    <h6 class="card-title">Ta là đại thần tiên</h6>
-                </div>
-                <div class="details">
-                    <div class="chap">
-                        <h6 class="primary-text">120</h6>
-                        <h6 class="secondary-text">Chap</h6>
-                    </div>
-                    <div class="last-read">
-                        <h6 class="primary-text">08/02/2021</h6>
-                        <h6 class="secondary-text">Last Read</h6>
-                    </div>
-                </div>
-            </div>
             
-            <div class="card">
-                <div class="card-img">
-                    <img src="http://st.imageinstant.net/data/comics/133/ta-la-dai-than-tien.jpg" alt="">
-                </div>
-                <div class="desc">
-                    <h6 class="card-title">Ta là đại thần tiên</h6>
-                </div>
-                <div class="details">
-                    <div class="chap">
-                        <h6 class="primary-text">120</h6>
-                        <h6 class="secondary-text">Chap</h6>
-                    </div>
-                    <div class="last-read">
-                        <h6 class="primary-text">08/02/2021</h6>
-                        <h6 class="secondary-text">Last Read</h6>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-img">
-                    <img src="http://st.imageinstant.net/data/comics/133/ta-la-dai-than-tien.jpg" alt="">
-                </div>
-                <div class="desc">
-                    <h6 class="card-title">Ta là đại thần tiên</h6>
-                </div>
-                <div class="details">
-                    <div class="chap">
-                        <h6 class="primary-text">120</h6>
-                        <h6 class="secondary-text">Chap</h6>
-                    </div>
-                    <div class="last-read">
-                        <h6 class="primary-text">08/02/2021</h6>
-                        <h6 class="secondary-text">Last Read</h6>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-img">
-                    <img src="http://st.imageinstant.net/data/comics/133/ta-la-dai-than-tien.jpg" alt="">
-                </div>
-                <div class="desc">
-                    <h6 class="card-title">Ta là đại thần tiên</h6>
-                </div>
-                <div class="details">
-                    <div class="chap">
-                        <h6 class="primary-text">120</h6>
-                        <h6 class="secondary-text">Chap</h6>
-                    </div>
-                    <div class="last-read">
-                        <h6 class="primary-text">08/02/2021</h6>
-                        <h6 class="secondary-text">Last Read</h6>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-img">
-                    <img src="http://st.imageinstant.net/data/comics/133/ta-la-dai-than-tien.jpg" alt="">
-                </div>
-                <div class="desc">
-                    <h6 class="card-title">Ta là đại thần tiên</h6>
-                </div>
-                <div class="details">
-                    <div class="chap">
-                        <h6 class="primary-text">120</h6>
-                        <h6 class="secondary-text">Chap</h6>
-                    </div>
-                    <div class="last-read">
-                        <h6 class="primary-text">08/02/2021</h6>
-                        <h6 class="secondary-text">Last Read</h6>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-img">
-                    <img src="http://st.imageinstant.net/data/comics/133/ta-la-dai-than-tien.jpg" alt="">
-                </div>
-                <div class="desc">
-                    <h6 class="card-title">Ta là đại thần tiên</h6>
-                </div>
-                <div class="details">
-                    <div class="chap">
-                        <h6 class="primary-text">120</h6>
-                        <h6 class="secondary-text">Chap</h6>
-                    </div>
-                    <div class="last-read">
-                        <h6 class="primary-text">08/02/2021</h6>
-                        <h6 class="secondary-text">Last Read</h6>
-                    </div>
-                </div>
-            </div>
         </div>
         
         <!-- Add Modal -->
@@ -238,24 +107,68 @@
                 <div class="modal-header">Add Comic</div>
                 <div class="modal-body">
                     <form action="" class="form" autocomplete="off">
-                        <img src="http://st.imageinstant.net/data/comics/133/ta-la-dai-than-tien.jpg" alt="">
+                        <img src="" alt="" id="imgAddModal">
                         <input class="form-control" type="text" name="name" placeholder="Comic's name">
                         <input class="form-control" type="number" name="chap" placeholder="Chap">
+                        <input type="text" class="form-control" name="image" id="linkImgAddModal" placeholder="Link image of the comic">
                         <select class="form-control" name="type" id="type">
                             <option value="Manhwa">Manhwa</option>
                             <option value="Manhua">Manhua</option>
                             <option value="Manga">Manga</option>
                             <option value="Others">Others</option>
                         </select>
-                        <input class="form-control" type="date" name="lastRead" disabled>
-                        <label class="form-control"><input type="checkbox" name="Hot">Hot</label>
-                        <label class="form-control"><input type="checkbox" name="BlackList">Black list</label>
+                        <input class="form-control" type="text" name="lastRead" id="lastRead" disabled>
+                        <label class="form-control"><input type="checkbox" name="hot">Hot</label>
+                        <label class="form-control"><input type="checkbox" name="blackList">Black list</label>
+                        <button class="btn btn-modal">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Modal -->
+        <div class="edit-modal modal-wrapper">
+            <div class="modal">
+                <div class="modal-header">Edit Comic</div>
+                <div class="modal-body">
+                    <form action="" class="form" autocomplete="off">
+                        <img src="" alt="" name="imgEditModal">
+                        <input class="form-control" type="text" name="name" placeholder="Comic's name">
+                        <input class="form-control" type="number" name="chap" placeholder="Chap">
+                        <input type="text" class="form-control" name="image" placeholder="Link image of the comic">
+                        <select class="form-control" name="type" id="type">
+                            <option value="Manhwa">Manhwa</option>
+                            <option value="Manhua">Manhua</option>
+                            <option value="Manga">Manga</option>
+                            <option value="Others">Others</option>
+                        </select>
+                        <input class="form-control" type="text" name="lastRead" id="lastRead" disabled>
+                        <label class="form-control"><input type="checkbox" name="hot">Hot</label>
+                        <label class="form-control"><input type="checkbox" name="blackList">Black list</label>
                         <button class="btn btn-modal">Submit</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-</body>
+
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-firestore.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+          apiKey: "AIzaSyDopn6x5RajyocJk5ZaBz0WvKunYjr54lo",
+          authDomain: "comiccollection-48b9f.firebaseapp.com",
+          databaseURL: "https://comiccollection-48b9f-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "comiccollection-48b9f",
+          storageBucket: "comiccollection-48b9f.appspot.com",
+          messagingSenderId: "336941908406",
+          appId: "1:336941908406:web:6c798d8f008b8a63d5c117"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
     <script src="./js/home.js"></script>
+</body>
 </html>
