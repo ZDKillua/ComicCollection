@@ -1,15 +1,22 @@
 const db = firebase.firestore();
 
 // User
-const username = document.getElementById("userName");
+const user = document.getElementById("userName");
 const job = document.getElementById("userJob");
-username.innerHTML = localStorage.getItem("userName");
+user.innerHTML = localStorage.getItem("userName");
 job.innerHTML = localStorage.getItem("userJob");
 
 // Menu
 const btnMenu = document.querySelector("#btn");
 const sidebar = document.querySelector(".sidebar");
 const btnLogout = document.getElementById("log-out");
+const btnAll = document.getElementById("btnAll");
+const btnManhwa = document.getElementById("btnManhwa");
+const btnManhua = document.getElementById("btnManhua");
+const btnManga = document.getElementById("btnManga");
+const btnOthers = document.getElementById("btnOthers");
+const btnBlacklist = document.getElementById("btnBlacklist");
+const txtSearch = document.getElementById("searchTxt");
 
 // Modal add
 const btnAdd = document.getElementById("btnAdd");
@@ -117,7 +124,7 @@ const renderComic = doc => {
     const btnDelete = document.querySelector(`[data-id='${doc.id}'] .btn-delete`);
     btnDelete.addEventListener('click', () => {
         if (confirm("Are you sure you want to delete this comic?") == true) {
-            db.collection('Comics/Admin/Comic').doc(`${doc.id}`).delete().then(() => {
+            db.collection('Comics/' + user.innerHTML + '/Comic').doc(`${doc.id}`).delete().then(() => {
                 console.log('Comic successfully deleted');
             }).catch(err => {
                 console.log('Error removing comic', err);
@@ -126,15 +133,8 @@ const renderComic = doc => {
     });
 }
 
-// Get all comics
-// db.collection('Comics/Admin/Comic').get().then(querySnapshot => {
-//     querySnapshot.forEach(doc => {
-//         renderComic(doc);
-//     })
-// });
-
 // Real time listtener
-db.collection('Comics/Admin/Comic').onSnapshot(snapshot => {
+db.collection('Comics/' + user.innerHTML + '/Comic').where('blackList', '==', false).onSnapshot(snapshot => {
     snapshot.docChanges().forEach(change => {
         if (change.type === 'added') {
             renderComic(change.doc);
@@ -175,7 +175,7 @@ txtImg.addEventListener('change', () => {
 addModalForm.addEventListener('submit', e => {
     e.preventDefault();
     if (validateAddForm() == true) {
-        db.collection('Comics/Admin/Comic').add({
+        db.collection('Comics/' + user.innerHTML + '/Comic').add({
             name: addModalForm.name.value,
             chap: addModalForm.chap.value,
             image: addModalForm.image.value,
@@ -194,7 +194,7 @@ addModalForm.addEventListener('submit', e => {
 // Click submit in edit modal
 editModalForm.addEventListener('submit', e => {
     e.preventDefault();
-    db.collection('Comics/Admin/Comic').doc(id).update({
+    db.collection('Comics/' + user.innerHTML + '/Comic').doc(id).update({
         name: editModalForm.name.value,
         chap: editModalForm.chap.value,
         image: editModalForm.image.value,
@@ -205,3 +205,92 @@ editModalForm.addEventListener('submit', e => {
     });
     editModal.classList.remove('modal-show');
 });
+
+// Click type comic button in menu
+function getComicsOfType(str) {
+    clearCardInContent();
+
+    if (str === 'Blacklist') {
+        db.collection('Comics/' + user.innerHTML + '/Comic').where('blackList', '==', true).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                renderComic(doc);
+            })
+        });
+        return;
+    }
+    else if (str == 'All Comics') {
+        db.collection('Comics/' + user.innerHTML + '/Comic').where('blackList', '==', false).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                renderComic(doc);
+            })
+        });
+        return;
+    }
+    db.collection('Comics/' + user.innerHTML + '/Comic').where('type', '==', str).where('blackList', '==', false).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+            renderComic(doc);
+        })
+    });
+}
+
+// Clear cardContainer children
+function clearCardInContent(){
+    while (cardContainer.firstChild)
+        cardContainer.firstChild.remove();
+}
+
+// Click type comic menu button
+btnManhwa.addEventListener('click', () => {
+    getComicsOfType(btnManhwa.children[1].innerHTML);
+});
+btnManhua.addEventListener('click', () => {
+    getComicsOfType(btnManhua.children[1].innerHTML);
+});
+btnManga.addEventListener('click', () => {
+    getComicsOfType(btnManga.children[1].innerHTML);
+});
+btnOthers.addEventListener('click', () => {
+    getComicsOfType(btnOthers.children[1].innerHTML);
+});
+btnBlacklist.addEventListener('click', () => {
+    getComicsOfType(btnBlacklist.children[1].innerHTML);
+});
+btnAll.addEventListener('click', () => {
+    getComicsOfType(btnAll.children[1].innerHTML);
+});
+
+// Search comic
+txtSearch.addEventListener('input', () => {
+    db.collection('Comics/' + user.innerHTML + '/Comic').where('blackList', '==', false).get().then(querySnapshot => {
+        clearCardInContent();
+        querySnapshot.forEach(doc => {
+            if (removeAccents(doc.data().name.toUpperCase()).includes(removeAccents(txtSearch.value.toUpperCase()))) {
+                renderComic(doc);
+            }
+        });
+    });
+});
+
+function removeAccents(str) {
+    var AccentsMap = [
+      "aàảãáạăằẳẵắặâầẩẫấậ",
+      "AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ",
+      "dđ", "DĐ",
+      "eèẻẽéẹêềểễếệ",
+      "EÈẺẼÉẸÊỀỂỄẾỆ",
+      "iìỉĩíị",
+      "IÌỈĨÍỊ",
+      "oòỏõóọôồổỗốộơờởỡớợ",
+      "OÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢ",
+      "uùủũúụưừửữứự",
+      "UÙỦŨÚỤƯỪỬỮỨỰ",
+      "yỳỷỹýỵ",
+      "YỲỶỸÝỴ"    
+    ];
+    for (var i=0; i<AccentsMap.length; i++) {
+      var re = new RegExp('[' + AccentsMap[i].substr(1) + ']', 'g');
+      var char = AccentsMap[i][0];
+      str = str.replace(re, char);
+    }
+    return str;
+  }

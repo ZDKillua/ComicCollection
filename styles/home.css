@@ -377,11 +377,12 @@ header{
     display: flex;
     align-items: center;
     overflow-x: hidden;
+    background: #fff;
 }
 
 .search-wrapper i{
     display: inline-block;
-    padding: 0rem 1rem;
+    padding: 0rem .3rem;
     font-size: 1.5rem;
 }
 
