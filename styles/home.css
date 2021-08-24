@@ -434,15 +434,10 @@ header{
 }
 
 .card{
-    background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(20px);
+    background: none;
+    backdrop-filter: blur(5px);
     margin: 10px;
     border-radius: 8px;
-}
-
-.card:hover{   
-    box-shadow: 0 14px 28px rgba(0 , 0, 0, 0.25), 
-                0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 .btn-delete{
@@ -458,16 +453,19 @@ header{
     display: block;
     height: 200px;
     background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(5px);
     margin: 2px;
     border-radius: 3px;
-    
 }
 
 .card-img img{
     border-radius: 8px 8px 0 0;
     width: 100%;
     height: 100%;
+}
+
+.card-img img:hover{
+    cursor: pointer;
 }
 
 .desc{
@@ -477,10 +475,10 @@ header{
 
 .card-title{
     color: #d5d5d5;
-    font-size: 20px;
     font-weight: 600;
     letter-spacing: 0.7px;
     margin: 5px 0;
+    font-size: 20px;
 }
 
 .primary-text{
