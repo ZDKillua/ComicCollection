@@ -199,7 +199,7 @@ editModalForm.addEventListener('submit', e => {
         chap: editModalForm.chap.value,
         image: editModalForm.image.value,
         type: editModalForm.type.value,
-        lastRead: editModalForm.lastRead.value,
+        lastRead: getDate(),
         hot: editModalForm.hot.checked,
         blackList: editModalForm.blackList.checked
     });
